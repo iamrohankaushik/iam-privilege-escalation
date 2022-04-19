@@ -1,0 +1,267 @@
+{
+"Version": "2012-10-17",
+"Statement": [
+{
+"Sid": "MFAEnforcement",
+"Effect": "Allow",
+"Action": "*",
+"Resource": "*",
+"Condition": {
+"BoolIfExists": {
+"aws:MultiFactorAuthPresent": "true"
+}
+}
+},
+{
+"Sid": "PreventBoundaryRemoval",
+"Effect": "Deny",
+"Action": [
+"iam:DeleteUserPermissionsBoundary",
+"iam:DeleteRolePermissionsBoundary"
+],
+"Resource": [
+"arn:aws:iam::082826845521:role/*",
+"arn:aws:iam::082826845521:user/*"
+],
+"Condition": {
+"StringEquals": {
+"iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+}
+}
+},
+{
+"Sid": "PermissionBoundary",
+"Effect": "Deny",
+"Action": [
+"iam:PutRolePermissionsBoundary",
+"iam:PutUserPermissionsBoundary"
+],
+"Resource": [
+"arn:aws:iam::082826845521:role/*",
+"arn:aws:iam::082826845521:user/*"
+],
+"Condition": {
+"StringNotEquals": {
+"iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+}
+}
+},
+{
+"Sid": "PrivilegeEsclation",
+"Effect": "Deny",
+"Action": [
+"iam:CreateRole",
+"iam:CreateUser"
+],
+"Resource": [
+"arn:aws:iam::082826845521:role/*",
+"arn:aws:iam::082826845521:user/*"
+],
+"Condition": {
+"StringNotEquals": {
+"iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+}
+}
+},
+{
+"Sid": "BasicLambda",
+"Effect": "Deny",
+"Action": "iam:PassRole",
+"NotResource": "arn:aws:iam::082826845521:role/BasicLamdaRole"
+},
+{
+"Sid": "IamProtect",
+"Effect": "Deny",
+"Action": [
+"iam:DeletePolicy",
+"iam:CreatePolicyVersion",
+"iam:DeletePolicyVersion",
+"iam:SetDefaultPolicyVersion",
+"iam:DeleteRolePolicy",
+"iam:DeleteRole"
+],
+"Resource": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+},
+{
+"Sid": "InstanceProtect",
+"Effect": "Deny",
+"Action": [
+"ec2:TerminateInstances",
+"ec2:StopInstances",
+"rds:DeleteDBCluster",
+"rds:DeleteDBInstance"
+],
+"Resource": "*",
+"Condition": {
+"StringEquals": {
+"aws:ResourceTag/Termination": "No"
+}
+}
+},
+{
+"Sid": "S3Protect",
+"Effect": "Deny",
+"Action": "s3:DeleteBucket",
+"Resource": "*",
+"Condition": {
+"StringEquals": {
+"aws:ResourceTag/Sensitive": "Yes"
+}
+}
+}
+]
+}
+
+{
+"Version": "2012-10-17",
+"Statement": [
+{
+"Sid": "MFAEnforcement",
+"Effect": "Allow",
+"Action": "*",
+"Resource": "*",
+"Condition": {
+"BoolIfExists": {
+"aws:MultiFactorAuthPresent": "true"
+}
+}
+},
+{
+"Sid": "PreventBoundaryRemoval",
+"Effect": "Deny",
+"Action": [
+"iam:DeleteUserPermissionsBoundary",
+"iam:DeleteRolePermissionsBoundary"
+],
+"Resource": [
+"arn:aws:iam::082826845521:role/*",
+"arn:aws:iam::082826845521:user/*"
+],
+"Condition": {
+"StringEquals": {
+"iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+}
+}
+},
+{
+"Sid": "PermissionBoundary",
+"Effect": "Deny",
+"Action": [
+"iam:PutRolePermissionsBoundary",
+"iam:PutUserPermissionsBoundary"
+],
+"Resource": [
+"arn:aws:iam::082826845521:role/*",
+"arn:aws:iam::082826845521:user/*"
+],
+"Condition": {
+"StringNotEquals": {
+"iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+}
+}
+},
+{
+"Sid": "PrivilegeEsclation",
+"Effect": "Deny",
+"Action": [
+"iam:CreateRole",
+"iam:CreateUser"
+],
+"Resource": [
+"arn:aws:iam::082826845521:role/*",
+"arn:aws:iam::082826845521:user/*"
+],
+"Condition": {
+"StringNotEquals": {
+"iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+}
+}
+},
+{
+"Sid": "BasicLambda",
+"Effect": "Deny",
+"Action": "iam:PassRole",
+"NotResource": "arn:aws:iam::082826845521:role/BasicLamdaRole"
+},
+{
+"Sid": "IamProtect",
+"Effect": "Deny",
+"Action": [
+"iam:DeleteAccessKey",
+"iam:DeleteGroup",
+"iam:DeleteVirtualMFADevice",
+"iam:DeleteUserPolicy",
+"iam:DeletePolicy",
+"iam:CreatePolicyVersion",
+"iam:DeletePolicyVersion",
+"iam:DeleteRolePolicy",
+"iam:DeleteUser",
+"iam:DeleteGroupPolicy",
+"iam:DeleteRole"
+],
+"Resource": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+},
+{
+"Sid": "InstanceProtect",
+"Effect": "Deny",
+"Action": [
+"ec2:DeleteFlowLogs",
+"ec2:DeleteSubnet",
+"ec2:DeleteLaunchTemplate",
+"ec2:TerminateInstances",
+"ec2:DeleteVpcEndpoints",
+"ec2:DeleteVpcPeeringConnection",
+"ec2:DeleteRoute",
+"ec2:StopInstances",
+"ec2:DeleteRouteTable",
+"ec2:DeleteVpnConnectionRoute",
+"ec2:DeleteVpnGateway",
+"ec2:DeleteSecurityGroup",
+"ec2:DeleteNatGateway",
+"ec2:DeleteInternetGateway",
+"ec2:DeleteVpc",
+"ec2:DeleteVpnConnection",
+"ec2:DeleteTransitGateway"
+],
+"Resource": "*",
+"Condition": {
+"StringEquals": {
+"aws:ResourceTag/Termination": "No"
+}
+}
+},
+{
+"Sid": "S3Protect",
+"Effect": "Deny",
+"Action": [
+"s3:DeleteObject",
+"s3:RestoreObject",
+"s3:DeleteBucket"
+],
+"Resource": "*",
+"Condition": {
+"StringEquals": {
+"aws:ResourceTag/Sensitive": "Yes"
+}
+}
+},
+{
+"Sid": "RDSProtect",
+"Effect": "Allow",
+"Action": [
+"rds:StopDBCluster",
+"rds:DeleteDBProxy",
+"rds:StopDBInstance",
+"rds:DeleteDBCluster",
+"rds:StopActivityStream",
+"rds:DeleteDBInstance"
+],
+"Resource": "*",
+"Condition": {
+"StringEquals": {
+"aws:ResourceTag/Sensitive": "Yes"
+}
+}
+}
+]
+}
