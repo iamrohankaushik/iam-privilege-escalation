@@ -104,17 +104,6 @@
       }
     },
     {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "dynamodb:DeleteItem",
-                "dynamodb:DeleteTableReplica",
-                "dynamodb:DeleteTable",
-                "dynamodb:DeleteBackup"
-            ],
-            "Resource": "*"
-        },
-    {
       "Sid": "RDSProtect",
       "Effect": "Deny",
       "Action": [
