@@ -23,10 +23,7 @@
         "iam:CreateRole",
         "iam:CreateUser"
       ],
-      "Resource": [
-        "arn:aws:iam::082826845521:role/*",
-        "arn:aws:iam::082826845521:user/*"
-      ],
+      "Resource": "*",
       "Condition": {
         "StringEquals": {
           "iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
@@ -55,7 +52,12 @@
         "iam:DeleteGroupPolicy",
         "iam:DeleteRole"
       ],
-      "Resource": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+        }
+      }
     },
     {
       "Sid": "InstanceProtect",
