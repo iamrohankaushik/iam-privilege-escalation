@@ -26,7 +26,7 @@
       "Resource": "*",
       "Condition": {
         "StringEquals": {
-          "iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+          "iam:PermissionsBoundary": "arn:aws:iam:::policy/PermissionBoundary"
         }
       }
     },
@@ -34,7 +34,7 @@
       "Sid": "BasicLambda",
       "Effect": "Deny",
       "Action": "iam:PassRole",
-      "NotResource": "arn:aws:iam::082826845521:role/BasicLamdaRole"
+      "NotResource": "arn:aws:iam:::role/BasicLamdaRole"
     },
     {
       "Sid": "IamProtect",
@@ -55,7 +55,7 @@
       "Resource": "*",
       "Condition": {
         "StringEquals": {
-          "iam:PermissionsBoundary": "arn:aws:iam::082826845521:policy/PermissionBoundary"
+          "iam:PermissionsBoundary": "arn:aws:iam:::policy/PermissionBoundary"
         }
       }
     },
